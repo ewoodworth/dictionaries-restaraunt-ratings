@@ -13,27 +13,39 @@ def restaurant_ratings(path):
         scores[line[0]] = line[1]
     scores_data.close() 
 
-    user_answer = ''
-    while user_answer.lower() != 'q':
-        user_answer = raw_input("You can view our restaurant scores, or add a new entry!\n To view our restaurant scores, type 'view'\n To add a score entry type 'add'\n To exit, type 'q' \n") 
-        if user_answer == 'view':
-            for restaurant, score in sorted(scores.iteritems()):
+# It doesn't matter if we use item() or .iteritem() here. Seince we are sorting it 
+# Which means uploading the dictionary first in memory any ways, and then only sort it.
+    def print_dictionary(dictionary):
+        print "\n"
+
+        for restaurant, score in sorted(dictionary.iteritems()):
                 print "%s is rated at %s." % (restaurant, score)
+
+        print "\n"
+
+    user_answer = ''
+    while user_answer != 'q':
+        user_answer = raw_input("You can view our restaurant scores, or add a new entry!\n To view our restaurant scores, type 'view'\n To add a score entry type 'add'\n To exit, type 'q'\n").lower()
+
+        if user_answer == 'view':
+
+            #calling the function to print out the dictionarry 
+            print_dictionary(scores)
+
         elif user_answer == "add":
-            user_restaurant = raw_input("Please enter a restaurant you'd like to add to our survey!\n")
+
+            #adding .title() method to the user's restaurant input makes it possible to include
+            #in sorting. 
+            #since lowercase is going after upper case and won't be included in sorting
+            user_restaurant = raw_input("Please enter a restaurant you'd like to add to our survey!\n").title()
             user_score = int(raw_input("How would you score this restaurant?\n"))
             scores[user_restaurant] = user_score
 
-            for restaurant, score in sorted(scores.iteritems()):
-                print "%s is rated at %s." % (restaurant, score)
+            #colling the function to print the updated sorted dictionary.
+            print_dictionary(scores)
+            
         elif user_answer != "q":
             print "\n I'm sorry! I don't recognize your input. Start again \n"
 
-
-   # It doesn't matter if we use item() or .iteritem() here. Seince we are sorting it 
-   # Which means uploading the dictionary first in memory any ways, and then only sort it.
-
-   # for restaurant, score in sorted(scores.iteritems()):
-   #      print "%s is rated at %s." % (restaurant, score)
 
 restaurant_ratings("scores.txt")
