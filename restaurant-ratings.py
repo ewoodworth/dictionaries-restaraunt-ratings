@@ -25,7 +25,7 @@ def restaurant_ratings(path):
 
     user_answer = ''
     while user_answer != 'q':
-        user_answer = raw_input("You can view our restaurant scores, or add a new entry!\n To view our restaurant scores, type 'view'\n To add a score entry type 'add'\n To exit, type 'q'\n").lower()
+        user_answer = raw_input("You can view our restaurant scores, or add a new entry, or update an existing score!\n To view our restaurant scores, type 'view'\n To add a score entry type 'add'\n To update the score for a particular restaurant, type 'update'\n To exit, type 'q'\n").lower()
 
         if user_answer == 'view':
 
@@ -43,7 +43,17 @@ def restaurant_ratings(path):
 
             #colling the function to print the updated sorted dictionary.
             print_dictionary(scores)
-            
+
+        elif user_answer == "update":
+            user_restaurant = raw_input("Please enter a restaurant you'd like to update in our survey!\n").title()
+            user_score = int(raw_input("How would you update the score?\n"))
+
+            if user_restaurant in scores:
+                scores[user_restaurant] = user_score
+                
+            else: 
+                print "We don't have this restaurant! Please, try again"
+
         elif user_answer != "q":
             print "\n I'm sorry! I don't recognize your input. Start again \n"
 
